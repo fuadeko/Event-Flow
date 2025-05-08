@@ -38,10 +38,7 @@ app.get('/events/:eventId', Controller.eventDetail)
 app.get('/events/:eventId/buy', auth, Controller.buyTicket)
 app.post('/events/:eventId/buy', auth, Controller.postBuyTicket)
 app.get('/profile', auth, Controller.profile)
-app.post('/logout', (req, res) => {
-    req.session.destroy()
-    res.redirect('/login')
-})
+app.post('/logout', Controller.logout)
 
 
 app.get('/admin/dashboard', auth, isAdmin, Controller.adminDashboard)
