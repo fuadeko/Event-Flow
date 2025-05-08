@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Event</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">🎟️ Event Flow</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <% if (loggedIn) { %>
+                        <li class="nav-item"><a class="nav-link" href="/admin/add_event">Add Event</a></li>
+                        <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Edit Event</h1>
+        <form action="/admin/<%= event.id %>/edit" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Event Name</label>
+                <input type="text" class="form-control" name="name" value="<%= event.name %>" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <input type="datetime-local" class="form-control" name="date" value="<%= event.date.toISOString().split('T')[0] + 'T' + 
+                    event.date.getHours().toString().padStart(2, '0') + ':' + 
+                    event.date.getMinutes().toString().padStart(2, '0') %>" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" name="location" value="<%= event.location %>" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Price</label>
+                <input type="number" class="form-control" name="price" value="<%= event.price %>" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tickets Available</label>
+                <input type="number" class="form-control" name="ticketsAvailable" value="<%= event.ticketsAvailable %>"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" name="description" rows="3"><%= event.description %></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Event</button>
+        </form>
+    </div>
+</body>
+
+</html>

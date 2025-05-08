@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Eventix - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🎟️ Event Flow</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <% if (loggedIn) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">Profile</a>
+                        </li>
+                        <% } %>
+                </ul>
+                <% if (loggedIn) { %>
+                    <form action="/logout" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light">Logout</button>
+                    </form>
+                    <% } else { %>
+                        <a href="/login" class="btn btn-outline-light">Login</a>
+                        <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="mb-4">Upcoming Events</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <% events.forEach(event=> { %>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= event.name %>
+                            </h5>
+                            <p class="card-text">
+                                <span class="badge bg-primary">
+                                    <%= event.date.toDateString() %>
+                                </span>
+                                <span class="badge bg-secondary">
+                                    <%= event.location %>
+                                </span>
+                            </p>
+                            <p class="card-text">Price: $<%= event.price %>
+                            </p>
+                            <a href="/events/<%= event.id %>" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+</body>
+
+</html>

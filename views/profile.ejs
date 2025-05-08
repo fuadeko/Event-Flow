@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🎟️ Event Flow</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <% if (loggedIn) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">Profile</a>
+                        </li>
+                        <% } %>
+                </ul>
+                <% if (loggedIn) { %>
+                    <form action="/logout" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light">Logout</button>
+                    </form>
+                    <% } else { %>
+                        <a href="/login" class="btn btn-outline-light">Login</a>
+                        <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Profile Info</h3>
+                        <p class="card-text"><strong>Email:</strong>
+                            <%= user.email %>
+                        </p>
+                        <% if (user.Profile) { %>
+                            <p class="card-text"><strong>Name:</strong>
+                                <%= user.Profile.fullName %>
+                            </p>
+                            <p class="card-text"><strong>Phone:</strong>
+                                <%= user.Profile.phone %>
+                            </p>
+                            <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h3 class="mb-4">Your Transactions</h3>
+                <% user.Transactions.forEach(transaction=> { %>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= transaction.Event.name %>
+                            </h5>
+                            <p class="card-text">
+                                <span class="badge bg-primary">Quantity: <%= transaction.quantity %></span>
+                                <span class="badge bg-success">Total: $<%= transaction.quantity *
+                                        transaction.Event.price %></span>
+                            </p>
+                            <p class="card-text text-muted">Status: <%= transaction.status %>
+                            </p>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

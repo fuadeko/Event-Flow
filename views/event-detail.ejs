@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= event.name %> Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🎟️ Event Flow</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <% if (loggedIn) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">Profile</a>
+                        </li>
+                    <% } %>
+                </ul>
+                <% if (loggedIn) { %>
+                    <form action="/logout" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-outline-light">Logout</button>
+                    </form>
+                <% } else { %>
+                    <a href="/login" class="btn btn-outline-light">Login</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title"><%= event.name %></h1>
+                <div class="mb-3">
+                    <span class="badge bg-primary me-2"><%= event.date.toDateString() %></span>
+                    <span class="badge bg-success me-2">$<%= event.price %></span>
+                    <span class="badge bg-warning text-dark"><%= event.location %></span>
+                </div>
+                <p class="card-text"><%= event.description %></p>
+                <a href="/events/<%= event.id %>/buy" class="btn btn-success">Buy Tickets</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
