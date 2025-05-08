@@ -19,7 +19,7 @@ app.use(session({
 
 app.use((req, res, next) => {
     res.locals.loggedIn = !!req.session.userId;
-    res.locals.isAdmin = req.session.role === 'admin'
+    res.locals.isAdmin = (req.session && req.session.role === 'admin')
     next()
 })
 
