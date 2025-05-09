@@ -1,4 +1,4 @@
-const formatRupiah = require('../../helpers/helper');
+const formatRupiah = require('../helpers/helper');
 const isAdmin = require('../middlewares/isAdmin');
 const { Op } = require('sequelize')
 const { User, Event, Transaction, Profile } = require('../models');
