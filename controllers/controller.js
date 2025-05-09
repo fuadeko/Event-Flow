@@ -149,7 +149,7 @@ class Controller {
             await Event.destroy({
                 where: { id: req.params.eventId }
             })
-            res.redirect('/login')
+            res.redirect('/admin/events')
         } catch (error) {
             res.send(error.message)
         }

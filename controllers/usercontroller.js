@@ -3,14 +3,21 @@ const bcrypt = require('bcryptjs');
 
 class UserController {
     static getRegister(req, res) {
-        res.render('register_page');
+        const { validateErr } = req.query
+        let errMsg
+        if (validateErr) {
+            errMsg = validateErr.split(',')
+        } else {
+            errMsg = []
+        }
+        res.render('register_page', {errMsg});
     }
 
     static async postRegister(req, res) {
         try {
             const { email, password } = req.body;
             const hashedPassword = bcrypt.hashSync(password, 10);
-            
+
             const user = await User.create({
                 email,
                 password: hashedPassword,
@@ -28,7 +35,14 @@ class UserController {
             req.session.role = user.role;
             res.redirect('/');
         } catch (error) {
-            res.send(error.message);
+            if (error.name === 'SequelizeValidationError') {
+                let validateErr = error.errors.map(el => {
+                    return el.message
+                })
+                res.redirect(`/register?validateErr=${validateErr}`)
+            } else {
+                res.send(error.message);
+            }
         }
     }
 
