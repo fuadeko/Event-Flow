@@ -26,7 +26,6 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 
-// Routes
 app.get('/register', UserController.getRegister)
 app.post('/register', UserController.postRegister)
 

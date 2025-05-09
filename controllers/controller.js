@@ -1,13 +1,24 @@
+const formatRupiah = require('../../helpers/helper');
 const isAdmin = require('../middlewares/isAdmin');
+const { Op } = require('sequelize')
 const { User, Event, Transaction, Profile } = require('../models');
 
 class Controller {
     static async home(req, res) {
         try {
-            const events = await Event.findAll({
+            const { search } = req.query
+            let opt = {
                 include: 'EventCategories'
-            })
-            res.render('home', { events, isAdmin })
+            }
+            if (search) {
+                opt.where = {
+                    name: {
+                        [Op.iLike]: `%${search}%`
+                    }
+                }
+            }
+            const events = await Event.findAll(opt)
+            res.render('home', { events, isAdmin, formatRupiah })
         } catch (error) {
             res.send(error.message)
         }
@@ -19,7 +30,7 @@ class Controller {
                 include: ['EventCategories', 'Transactions']
             })
             if (!event) throw new Error('Event not found')
-            res.render('event-detail', { event, isAdmin })
+            res.render('event-detail', { event, isAdmin, formatRupiah })
         } catch (error) {
             res.send(error.message)
         }
@@ -76,7 +87,7 @@ class Controller {
                 ]
             })
             if (!user) throw new Error('User not found')
-            res.render('profile', { user: user.get({ plain: true }), isAdmin })
+            res.render('profile', { user: user.get({ plain: true }), isAdmin, formatRupiah })
         } catch (error) {
             res.send(error.message)
         }
@@ -168,6 +179,7 @@ class Controller {
         } catch (error) {
             res.send(error.message)
         }
+    }
 }
 
 module.exports = Controller;

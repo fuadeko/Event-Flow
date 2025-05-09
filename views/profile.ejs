@@ -62,8 +62,8 @@
                             </h5>
                             <p class="card-text">
                                 <span class="badge bg-primary">Quantity: <%= transaction.quantity %></span>
-                                <span class="badge bg-success">Total: $<%= transaction.quantity *
-                                        transaction.Event.price %></span>
+                                <span class="badge bg-success">Total: <%= formatRupiah(transaction.quantity *
+                                        transaction.Event.price) %></span>
                             </p>
                             <p class="card-text text-muted">Status: <%= transaction.status %>
                             </p>

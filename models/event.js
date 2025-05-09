@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       Event.belongsToMany(models.EventCategory, {
         through: 'EventEventCategories'});
     }
+
+    
   }
   Event.init({
     name: DataTypes.STRING,
